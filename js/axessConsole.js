@@ -40,6 +40,12 @@ function keyevent(event){
   cancelStrSelection();
 
   switch(event.keyCode){
+    // Backspace
+    case 8: 
+      writeText(false,"",getCursolRowIndex(),getCursolColIndex());
+      moveLeftCursol();
+      moveLeftCursol();
+      break;
     // Enter
     case 13: 
       moveDownCursol();
@@ -61,9 +67,9 @@ function keyevent(event){
       moveDownCursol();
       break;
     case 65: /* A */
-      rowIndex = getCursolRowIndex();
-      colIndex = getCursolColIndex();
-      writeText("A",rowIndex,colIndex);
+      // rowIndex = getCursolRowIndex();
+      // colIndex = getCursolColIndex();
+      writeText(true,"A",getCursolRowIndex(),getCursolColIndex());
       break;
     default:
       break;
@@ -128,7 +134,7 @@ function shiftKeyEventHandler(event){
 /*
 * テキスト書き込み
 */
-function writeText(text,rowIndex,colIndex){
+function writeText(isWrite,text,rowIndex,colIndex){
   var insetText;
   var rowStrLength = 0;
   console.log("Text:" + text + " rowIndex:" + rowIndex + " colIndex:" + colIndex);
@@ -141,7 +147,11 @@ function writeText(text,rowIndex,colIndex){
     rowStrLength += $(element).text().length;
     if( rowStrLength >= colIndex + 1){
 
-      text = insertStr($(element).text(),colIndex - rowStrLength,text);
+      if(isWrite){
+        text = insertChar($(element).text(),colIndex - rowStrLength,text);
+      }else{
+        text = deleteChar($(element).text(),colIndex - rowStrLength);
+      }
       console.log("modify text:" + text);
 
       // 既存のメッセージを削除
@@ -161,11 +171,18 @@ function writeText(text,rowIndex,colIndex){
   });
 }
 
-/* 文字列挿入 */
-function insertStr(str, index, insert) {
+/* 文字挿入 */
+function insertChar(str, index, insert) {
   var result = str.slice(0, index) + insert + str.slice(index, str.length);
   return result;
 }
+
+/* 文字削除 */
+function deleteChar(str, index) {
+  var result = str.slice(0, index-1) + str.slice(index, str.length);
+  return result;
+}
+
 
 /* 右選択 */
 function selectRightKey(){

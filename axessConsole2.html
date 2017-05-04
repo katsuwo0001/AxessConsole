@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AXESS Cosole</title>
+  <style type="text/css">
+    div{
+      font-family:'Roboto Mono', monospace; 
+      font-size: 30px;
+      background-color: #0000FF;
+
+    }
+    /* 背景 */
+    div.greenscreen{
+      position: relative;
+      border: solid;
+      border-width: 1px;
+      width: 100%;
+      height: 500px;
+
+    }
+    div.message-layer{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255,0,0,0.0);
+    }
+    div.line{
+      background-color: rgba(255,0,0,0.0);
+    }
+    div.marker-layer{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    div.selection{
+      width: 10px;
+      height: 36px;
+      background-color: rgba(255,0,255,0.8);
+
+    }
+    div.cursol-layer{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      background-color: rgba(0,0,0,0);
+
+    }
+    div.cursol{
+      position: absolute;
+      width: 15px;
+      height: 39px;
+      border-left: solid 2px #CC3300;
+      border-bottom: solid 2px #CC3300;
+      box-sizing: border-box;
+      background-color: rgba(0,0,0,0);
+
+    }
+    div.hiddenarea{
+      position: absolute;
+      top:0;
+      left:-999;
+    }
+    /* ホストレスポンス */
+    span.hostresponse{
+      color: #FFFFFF;
+    }
+    /* エントリ送信 */
+    span.sendentry{
+      color: #FF0066;
+      border: none;
+    }
+    span.som{
+      color: #FF0066;
+      /*content: ">";*/
+    }
+
+  </style>
+  
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:700" rel="stylesheet">  
+</head>
+<body>
+<div>X:<input type="text" id="x-point" name="x-point">Y:<input type="text" id="y-point" name="y-point"></div>
+<div id="greenscreen" class="greenscreen">
+  <div class="cursol-layer" >
+    <div class="cursol"></div>
+  </div>
+  <div class="marker-layer" >
+    <div class="selection" ></div>
+  </div> 
+  <div class="message-layer">
+    <div class="line">
+      <span class="hostresponse">HOST RESPONSE</span><span class="hostresponse">HOST RESPONSE</span>
+    </div>
+    <div class="line">
+      <span class="hostresponse">AAAA</span>
+    </div>
+    <div class="line">
+      <span class="hostresponse">AAAA<span class="som">></span><span contenteditable="true" class="sendentry">SEND ENTRY</span>AAA</span>
+    </div>
+  </div>
+</div>
+<div contenteditable="true" id="hiddenarea" class="hiddenarea"></div>
+<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="js/axessConsole.js"></script>
+</body>
+</html>

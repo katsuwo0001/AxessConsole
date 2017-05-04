@@ -36,6 +36,8 @@ function keyevent(event){
       shiftKeyEventHandler(event);
       return;
   }
+  // 選択状態を解除
+  cancelStrSelection();
 
   switch(event.keyCode){
     // Enter
@@ -103,7 +105,7 @@ function shiftKeyEventHandler(event){
   switch(event.keyCode){
     case 37:
       /* 左カーソル移動 */
-      selectRowBackward();
+      selectLeftKey();
       break;
     case 38:
       /* 上カーソル移動 */
@@ -167,17 +169,44 @@ function insertStr(str, index, insert) {
 
 /* 右選択 */
 function selectRightKey(){
-  console.log("selectRightKey:" + $('.selection').css('width'));
-  // カーソル位置
-  var cursolLeftIndex = $('.cursol').css('left').replace(/px/g,'')
-  console.log("cursol left:" + cursolLeftIndex);
+  var cursolLeft = parseInt($('.cursol').css('left'));
+  var selectionLeft = parseInt($('.selection').css('left'));
+  console.log("cursolLeft:" + cursolLeft + " selectionLeft:" + selectionLeft);
+  if(!isStrSelected()){
+    // 未選択
+    $('.selection').css('width','+=' + (yoko));
+    $('.selection').css('left', cursolLeft.toString() + "px");
+    moveRightCursol();
+  }else if(isStrSelected() && selectionLeft < cursolLeft){
+    // 選択済みで右
+    $('.selection').css('width','+=' + (yoko));
+    moveRightCursol();
+  }else if(isStrSelected() &&  selectionLeft === cursolLeft){
+    $('.selection').css('width','-=' + (yoko));
+    $('.selection').css('left', (cursolLeft+yoko).toString() + "px");
+    moveRightCursol();
+  }
+}
 
-   // return $('.cursol').css('top').replace(/px/g,'')/tate;
-
-  // if($('.selection').css('width').replace(/px/g,'') === "0px"){
-
-  // }
-  // $('.selection').css('width','+=' + (yoko));
+/* 左選択 */
+function selectLeftKey(){
+  var cursolLeft = parseInt($('.cursol').css('left'));
+  var selectionLeft = parseInt($('.selection').css('left'));
+  console.log("cursolLeft:" + cursolLeft + " selectionLeft:" + selectionLeft);
+  if(!isStrSelected()){
+    // 未選択
+    $('.selection').css('width','+=' + yoko);
+    $('.selection').css('left', (cursolLeft - yoko).toString() + "px");
+    moveLeftCursol();
+  }else if(isStrSelected() && selectionLeft === cursolLeft){
+    // 選択済みで右
+    $('.selection').css('width','+=' + (yoko));
+    $('.selection').css('left', (cursolLeft - yoko).toString() + "px");
+    moveLeftCursol();
+  }else if(isStrSelected() &&  selectionLeft < cursolLeft){
+    $('.selection').css('width','-=' + (yoko));
+    moveLeftCursol();
+  }
 }
 
 /* 左選択 */
@@ -185,3 +214,23 @@ function selectRowBackward(){
   $('.selection').css('width','-=' + (yoko));
 }
 
+/* 選択状態判定 */
+function isStrSelected(){
+  var result = false;
+  console.log("Selected Area length:" + $('.selection').css('width'));
+  if($('.selection').css('width') === "0px"){
+    result = false;
+  }else{
+    result = true;
+  }
+  // console.log("isStrSelected:" + result);
+  return result;
+
+}
+
+/* 文字列選択状態を解除 */
+function cancelStrSelection(){
+  // 未選択
+  $('.selection').css('width','0px');
+  $('.selection').css('left', '0px');
+}

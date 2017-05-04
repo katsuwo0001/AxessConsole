@@ -58,6 +58,14 @@
       background-color: rgba(0,0,0,0);
 
     }
+    div.mousefocus-layer{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 6;
+      opacity: 0;
+    }
+
     div.hiddenarea{
       position: absolute;
       top:0px;
@@ -85,6 +93,7 @@
 <body>
 <div>X:<input type="text" id="x-point" name="x-point">Y:<input type="text" id="y-point" name="y-point"></div>
 <div id="greenscreen" class="greenscreen">
+  <div class="mousefocus-layer" ></div>
   <div class="cursol-layer" >
     <div class="cursol"></div>
   </div>
@@ -99,7 +108,7 @@
       <span class="hostresponse">AAAA</span>
     </div>
     <div class="line">
-      <span class="hostresponse">AAAA<span class="som">></span><span contenteditable="true" class="sendentry">SEND ENTRY</span>AAA</span>
+      <span class="hostresponse">AAAA</span><span class="som">></span><span contenteditable="true" class="sendentry">SEND ENTRY</span><span class="hostresponse">AAA</span>
     </div>
   </div>
 </div>

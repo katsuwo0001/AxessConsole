@@ -2,6 +2,14 @@ var size = 30;
 var yoko = 18;
 var tate = 39;
 
+/* 送信エントリStyleクラス名 */
+var sendEntryClassName = "sendentry"
+
+/* mousefocus */
+$('.mousefocus-layer').on('click',function(){
+  $('#hiddenarea').focus();
+});
+
 
 /* mousemoveイベント */
 $('#greenscreen').on('mousemove',getClinetPoint);
@@ -216,8 +224,15 @@ function writeText(isWrite,text,rowIndex,colIndex){
     if( rowStrLength >= colIndex + 1){
 
       if(isWrite){
+        // var text = "";
+        // // 入力
+        // if($(element).attr("class") == sendEntryClassName){
+        //   text = $(element).text();
+        // }else{
+        // }
         text = insertChar($(element).text(),colIndex - rowStrLength,text);
       }else{
+        // 削除
         text = deleteChar($(element).text(),colIndex - rowStrLength);
       }
       console.log("modify text:" + text);

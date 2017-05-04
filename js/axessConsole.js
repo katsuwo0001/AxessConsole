@@ -170,18 +170,22 @@ function insertStr(str, index, insert) {
 /* 右選択 */
 function selectRightKey(){
   var cursolLeft = parseInt($('.cursol').css('left'));
+  var cursolTop = parseInt($('.cursol').css('top'));
   var selectionLeft = parseInt($('.selection').css('left'));
   console.log("cursolLeft:" + cursolLeft + " selectionLeft:" + selectionLeft);
   if(!isStrSelected()){
     // 未選択
+    $('.selection').css('top', cursolTop.toString() + "px");
     $('.selection').css('width','+=' + (yoko));
     $('.selection').css('left', cursolLeft.toString() + "px");
     moveRightCursol();
   }else if(isStrSelected() && selectionLeft < cursolLeft){
+    $('.selection').css('top', cursolTop.toString() + "px");
     // 選択済みで右
     $('.selection').css('width','+=' + (yoko));
     moveRightCursol();
   }else if(isStrSelected() &&  selectionLeft === cursolLeft){
+    $('.selection').css('top', cursolTop.toString() + "px");
     $('.selection').css('width','-=' + (yoko));
     $('.selection').css('left', (cursolLeft+yoko).toString() + "px");
     moveRightCursol();
@@ -191,19 +195,23 @@ function selectRightKey(){
 /* 左選択 */
 function selectLeftKey(){
   var cursolLeft = parseInt($('.cursol').css('left'));
+  var cursolTop = parseInt($('.cursol').css('top'));
   var selectionLeft = parseInt($('.selection').css('left'));
   console.log("cursolLeft:" + cursolLeft + " selectionLeft:" + selectionLeft);
   if(!isStrSelected()){
     // 未選択
+    $('.selection').css('top', cursolTop.toString() + "px");
     $('.selection').css('width','+=' + yoko);
     $('.selection').css('left', (cursolLeft - yoko).toString() + "px");
     moveLeftCursol();
   }else if(isStrSelected() && selectionLeft === cursolLeft){
     // 選択済みで右
+    $('.selection').css('top', cursolTop.toString() + "px");
     $('.selection').css('width','+=' + (yoko));
     $('.selection').css('left', (cursolLeft - yoko).toString() + "px");
     moveLeftCursol();
   }else if(isStrSelected() &&  selectionLeft < cursolLeft){
+    $('.selection').css('top', cursolTop.toString() + "px");
     $('.selection').css('width','-=' + (yoko));
     moveLeftCursol();
   }

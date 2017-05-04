@@ -2,11 +2,6 @@ var size = 30;
 var yoko = 18;
 var tate = 39;
 
-/*
-alert($('.line').eq(0).text());
-alert($('.line').eq(1).text());
-alert($('.line').eq(2).text());
-*/
 
 /* mousemoveイベント */
 $('#greenscreen').on('mousemove',getClinetPoint);
@@ -67,9 +62,82 @@ function keyevent(event){
       moveDownCursol();
       break;
     case 65: /* A */
-      // rowIndex = getCursolRowIndex();
-      // colIndex = getCursolColIndex();
       writeText(true,"A",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 66: /* B */
+      writeText(true,"B",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 67: /* C */
+      writeText(true,"C",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 68: /* D */
+      writeText(true,"D",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 69: /* E */
+      writeText(true,"E",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 70: /* F */
+      writeText(true,"F",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 71: /* G */
+      writeText(true,"G",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 72: /* H */
+      writeText(true,"H",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 73: /* I */
+      writeText(true,"I",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 74: /* J */
+      writeText(true,"J",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 75: /* K */
+      writeText(true,"K",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 76: /* L */
+      writeText(true,"L",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 77: /* M */
+      writeText(true,"M",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 78: /* N */
+      writeText(true,"N",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 79: /* O */
+      writeText(true,"O",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 80: /* P */
+      writeText(true,"P",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 81: /* Q */
+      writeText(true,"Q",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 82: /* R */
+      writeText(true,"R",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 83: /* S */
+      writeText(true,"S",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 84: /* T */
+      writeText(true,"T",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 85: /* U */
+      writeText(true,"U",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 86: /* V */
+      writeText(true,"V",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 87: /* W */
+      writeText(true,"W",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 88: /* X */
+      writeText(true,"X",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 89: /* Y */
+      writeText(true,"Y",getCursolRowIndex(),getCursolColIndex());
+      break;
+    case 90: /* Z */
+      writeText(true,"Z",getCursolRowIndex(),getCursolColIndex());
       break;
     default:
       break;

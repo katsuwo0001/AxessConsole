@@ -15,7 +15,8 @@ $('.mousefocus-layer').on('click',function(){
 
 
 /* mousemoveイベント */
-$('#greenscreen').on('mousemove',getClinetPoint);
+$('.mousefocus-layer').on('mousemove',getClinetPoint);
+$('.mousefocus-layer').on('mousedown',pointCursol);
 
 
 /* keydownイベント処理 */
@@ -25,12 +26,22 @@ $('#hiddenarea').on('keydown',keyevent);
 
 function getClinetPoint(event){
   // マウス位置を取得する
-  var mouseX = event.clientX ;  // X座
-  var mouseY = event.clientY ;  // Y座標 
+  var mouseX = event.offsetX ;  // X座
+  var mouseY = event.offsetY ;  // Y座標 
   $('#x-point').val(mouseX); 
   $('#y-point').val(mouseY); 
 
 };
+
+function pointCursol(event){
+  // マウス位置を取得する
+  var mouseX = event.offsetX ;  // X座
+  var mouseY = event.offsetY ;  // Y座標 
+
+  console.log("mouseX:" + mouseX + " mouseY:" + mouseY);
+  $('.cursol').css('left',mouseX - (mouseX % yoko));
+  $('.cursol').css('top',mouseY - (mouseY % tate));
+}
 
 /* キーイベント処理 */
 function keyevent(event){
@@ -241,7 +252,8 @@ function writeText(isWrite,text,rowIndex,colIndex){
         // エントリ送信領域追加
         var sendElementText = '<span class="' + sendEntryClassName +  '">'+ text + '</span>';
         if($(element).next("span").attr("class") == sendEntryClassName){
-          counter++;
+          // counter++;
+          counter += elementText.slice(0,colIndex - counter).length;
           return true;
         }
         // あまりのホストレスポンス

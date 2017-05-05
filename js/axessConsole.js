@@ -2,8 +2,11 @@ var size = 30;
 var yoko = 18;
 var tate = 39;
 
-/* 送信エントリStyleクラス名 */
+/* 送信エントリクラス名 */
 var sendEntryClassName = "sendentry"
+
+/* ホストレスポンスクラス名 */
+var hostResponseClassName = "hostresponse"
 
 /* mousefocus */
 $('.mousefocus-layer').on('click',function(){
@@ -215,41 +218,60 @@ function writeText(isWrite,text,rowIndex,colIndex){
   var rowStrLength = 0;
   console.log("Text:" + text + " rowIndex:" + rowIndex + " colIndex:" + colIndex);
 
+
   /* 対象行の表示文字をspanタグ単位で取得 */
+  var counter = 0;  
   $('.line').eq(rowIndex).children('span').each(function(index,element){
-    console.log($(element).text() + " length:" + $(element).text().length);
+    console.log($(element).text() + " length:" + $(element).text().length + " Class:" + $(element).attr("class"));
 
     // 挿入対象文字数か判定
-    rowStrLength += $(element).text().length;
-    if( rowStrLength >= colIndex + 1){
+    var elementText = $(element).text();
 
-      if(isWrite){
-        // var text = "";
-        // // 入力
-        // if($(element).attr("class") == sendEntryClassName){
-        //   text = $(element).text();
-        // }else{
-        // }
-        text = insertChar($(element).text(),colIndex - rowStrLength,text);
-      }else{
-        // 削除
-        text = deleteChar($(element).text(),colIndex - rowStrLength);
+    // ホストレスポンス領域
+    console.log("Counter:" + counter);
+
+    if($(element).text().length > colIndex - 1 - counter){
+      // 登録対象element
+      if ($(element).attr("class") == hostResponseClassName) {
+        // カーソル以降の文字を削除して、更新
+        console.log("String of before cursol:" + elementText.slice(0,colIndex - counter));
+        $(element).text('');
+        $(element).text(elementText.slice(0,colIndex - counter));
+
+        // エントリ送信領域追加
+        var sendElementText = '<span class="' + sendEntryClassName +  '">'+ text + '</span>';
+        if($(element).next("span").attr("class") == sendEntryClassName){
+          counter++;
+          return true;
+        }
+        // あまりのホストレスポンス
+        console.log("String of after cursol:" + elementText.slice(colIndex - counter,elementText.length));
+        var afterHostresponseText = "";
+        if(elementText.slice(colIndex - counter,elementText.length) != 0){
+          afterHostresponseText = '<span class="' + hostResponseClassName +'">' + elementText.slice(colIndex - counter,elementText.length) + '</span>';
+        }
+        $(element).after(sendElementText + afterHostresponseText);
+
+        // カーソルを右へ移動
+        moveRightCursol();
+
+        // 処理終了
+        return false;
+      }else if($(element).attr("class") == sendEntryClassName){
+        text = insertChar($(element).text(),colIndex - counter,text);
+        $(element).text('');
+        $(element).text(text);
+        // カーソルを右へ移動
+        moveRightCursol();
+        // 処理終了
+        return false;
       }
-      console.log("modify text:" + text);
-
-      // 既存のメッセージを削除
-      $(element).text('');
-      $(element).text(text);
-
-      // カーソルを右へ移動
-      moveRightCursol();
-
-      // 処理終了
-      return false;
-    }else{
-      // 次のelement
-      return true;
     }
+    console.log("Loop next element");
+    counter += $(element).text().length;
+
+    // 次のLoop
+    return true;
 
   });
 }

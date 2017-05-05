@@ -3,10 +3,13 @@ var yoko = 18;
 var tate = 39;
 
 /* 送信エントリクラス名 */
-var sendEntryClassName = "sendentry"
+var sendEntryClassName = "sendentry";
 
 /* ホストレスポンスクラス名 */
-var hostResponseClassName = "hostresponse"
+var hostResponseClassName = "hostresponse";
+
+/* マウス選択Status */
+var isMouseSelecting = false;
 
 /* mousefocus */
 $('.mousefocus-layer').on('click',function(){
@@ -17,6 +20,9 @@ $('.mousefocus-layer').on('click',function(){
 /* mousemoveイベント */
 $('.mousefocus-layer').on('mousemove',getClinetPoint);
 $('.mousefocus-layer').on('mousedown',pointCursol);
+$('.mousefocus-layer').on('mouseup',mouseSelect);
+$('.mousefocus-layer').on('mousemove',mouseSelect);
+$('.mousefocus-layer').on('mouseup',function(){isMouseSelecting=false;});
 
 
 /* keydownイベント処理 */
@@ -33,6 +39,7 @@ function getClinetPoint(event){
 
 };
 
+/* マウスによるカーソル移動 */
 function pointCursol(event){
   // マウス位置を取得する
   var mouseX = event.offsetX ;  // X座
@@ -41,6 +48,36 @@ function pointCursol(event){
   console.log("mouseX:" + mouseX + " mouseY:" + mouseY);
   $('.cursol').css('left',mouseX - (mouseX % yoko));
   $('.cursol').css('top',mouseY - (mouseY % tate));
+
+  // 選択状態を解除
+  cancelStrSelection();
+
+  // 選択領域を移動
+  $('.selection').css('left',mouseX - (mouseX % yoko));
+  $('.selection').css('top',mouseY - (mouseY % tate));
+
+  // マウス選択Status更新
+  isMouseSelecting = true;
+
+}
+
+/* マウスによる文字列選択 */
+function mouseSelect(event){
+  if(!isMouseSelecting){
+    return;
+  }
+
+  var mouseX = event.offsetX - (event.offsetX % yoko) ;  // X座
+  var cursolLeft = parseInt($('.cursol').css('left'));
+  // console.log("mouseX:" + mouseX + " cursolLeft:" + cursolLeft);
+
+  if(mouseX > cursolLeft){
+    $('.selection').css('width', mouseX - parseInt($('.selection').css('left')));
+  } else{
+    $('.selection').css('width', cursolLeft - mouseX);
+    $('.selection').css('left', mouseX);
+  }
+
 }
 
 /* キーイベント処理 */
@@ -365,7 +402,6 @@ function isStrSelected(){
   }else{
     result = true;
   }
-  // console.log("isStrSelected:" + result);
   return result;
 
 }
